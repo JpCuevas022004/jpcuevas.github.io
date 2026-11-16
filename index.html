@@ -436,35 +436,38 @@
                                 <p class="text-body-secondary small">Interested in hiring or collaborating? Fill out the form below or email me directly.</p>
                             </div>
 
-                            <form id="contactForm" class="needs-validation" novalidate>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="senderName" class="form-label small fw-semibold">Full Name</label>
-                                        <input type="text" class="form-control" id="senderName" placeholder="Juan Dela Cruz" required>
-                                        <div class="invalid-feedback">Please enter your name.</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="senderEmail" class="form-label small fw-semibold">Email Address</label>
-                                        <input type="email" class="form-control" id="senderEmail" placeholder="hr@company.com" required>
-                                        <div class="invalid-feedback">Please enter a valid email address.</div>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="messageSubject" class="form-label small fw-semibold">Subject</label>
-                                        <input type="text" class="form-control" id="messageSubject" placeholder="Job Opportunity / Project Inquiry" required>
-                                        <div class="invalid-feedback">Please provide a subject.</div>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="messageBody" class="form-label small fw-semibold">Message</label>
-                                        <textarea class="form-control" id="messageBody" rows="4" placeholder="Write your message here..." required></textarea>
-                                        <div class="invalid-feedback">Please enter your message.</div>
-                                    </div>
-                                    <div class="col-12 d-grid mt-4">
-                                        <button type="submit" class="btn btn-primary btn-lg fw-semibold">
-                                            <i class="bi bi-send-fill me-2"></i>Send Message
-                                        </button>
-                                    </div>
+                            <form id="contactForm" action="https://formspree.io/f/PALITAN_NG_FORM_ID_MO" method="POST" class="needs-validation" novalidate>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="senderName" class="form-label small fw-semibold">Full Name</label>
+                                    <input type="text" class="form-control" id="senderName" name="name" placeholder="Juan Dela Cruz" required>
+                                    <div class="invalid-feedback">Please enter your name.</div>
                                 </div>
-                            </form>
+                                <div class="col-md-6">
+                                    <label for="senderEmail" class="form-label small fw-semibold">Email Address</label>
+                                    <input type="email" class="form-control" id="senderEmail" name="email" placeholder="hr@company.com" required>
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="messageSubject" class="form-label small fw-semibold">Subject</label>
+                                    <input type="text" class="form-control" id="messageSubject" name="_subject" placeholder="Job Opportunity / Project Inquiry" required>
+                                    <div class="invalid-feedback">Please provide a subject.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="messageBody" class="form-label small fw-semibold">Message</label>
+                                    <textarea class="form-control" id="messageBody" name="message" rows="4" placeholder="Write your message here..." required></textarea>
+                                    <div class="invalid-feedback">Please enter your message.</div>
+                                </div>
+                                <!-- Honeypot anti-spam field (nakatago sa totoong tao, pero pinupuno ng bots) -->
+                                <input type="text" name="_gotcha" style="display:none">
+                                
+                                <div class="col-12 d-grid mt-4">
+                                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg fw-semibold">
+                                        <i class="bi bi-send-fill me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
 
                             <!-- Alert Feedback Container (Handled by JS) -->
                             <div id="formAlert" class="alert alert-success mt-4 d-none" role="alert">

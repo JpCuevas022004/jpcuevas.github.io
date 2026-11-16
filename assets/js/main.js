@@ -107,12 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 4. CONTACT FORM VALIDATION & SUBMISSION HANDLING
+    // 4. CONTACT FORM VALIDATION & FORMSPREE AJAX SUBMISSION
     const contactForm = document.getElementById('contactForm');
     const formAlert = document.getElementById('formAlert');
+    const submitBtn = document.getElementById('submitBtn');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', event => {
+        contactForm.addEventListener('submit', async event => {
             event.preventDefault();
             event.stopPropagation();
 
@@ -121,21 +122,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Kung valid ang input, i-display ang success alert
             contactForm.classList.add('was-validated');
-            if (formAlert) {
-                formAlert.classList.remove('d-none');
+            
+            // I-disable muna ang button habang nagse-send
+            const originalBtnHTML = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formAlert.className = 'alert alert-success mt-4';
+                    formAlert.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Message sent! Thank you for reaching out—I will get back to you soon.';
+                    contactForm.reset();
+                    contactForm.classList.remove('was-validated');
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                formAlert.className = 'alert alert-danger mt-4';
+                formAlert.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i>Oops! Something went wrong. Please email me directly instead.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHTML;
                 formAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
-
-            // I-reset ang form pagkalipas ng 4 segundo
-            setTimeout(() => {
-                contactForm.reset();
-                contactForm.classList.remove('was-validated');
-            }, 4000);
         });
     }
-
 
     // 5. AUTOMATIC COPYRIGHT YEAR
     const yearSpan = document.getElementById('currentYear');
